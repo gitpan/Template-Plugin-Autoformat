@@ -20,22 +20,19 @@ use Template qw( :status );
 use Template::Test;
 use POSIX qw( localeconv );
 
-$Template::Test::DEBUG = 0;
+$Template::Test::DEBUG    = 0;
 $Template::Test::PRESERVE = 1;
 
-# for testing known bug with locales that don't use '.' as a decimal 
+# for testing known bug with locales that don't use '.' as a decimal
 # separator - see TODO file.
 # POSIX::setlocale( &POSIX::LC_ALL, 'sv_SE' );
 
 my $loc = localeconv;
-my $dec = $loc->{ decimal_point };
+my $dec = $loc->{decimal_point};
 
-my $vars = {
-    decimal => $dec,
-};
+my $vars = { decimal => $dec, };
 
-test_expect(\*DATA, { POST_CHOMP => 1 }, $vars);
- 
+test_expect( \*DATA, { POST_CHOMP => 1 }, $vars );
 
 #------------------------------------------------------------------------
 # test input
@@ -61,8 +58,8 @@ for a reasonable length
   reasonable length
 
 -- test --
-[% USE autoformat(left=5) %]
-[% autoformat(global.text, right=30) %]
+[% USE Autoformat(left=5) %]
+[% Autoformat(global.text, right=30) %]
 -- expect --
     This is some text which I
     would like to have
@@ -71,23 +68,23 @@ for a reasonable length
     for a reasonable length
 
 -- test --
-[% USE autoformat %]
-[% autoformat(global.text, 'more text', right=50) %]
+[% USE Autoformat %]
+[% Autoformat(global.text, 'more text', right=50) %]
 -- expect --
 This is some text which I would like to have
 formatted and I should ensure that it continues
 for a reasonable length more text
 
 -- test --
-[% USE autoformat(left=10) %]
-[% global.text | autoformat %]
+[% USE Autoformat(left=10) %]
+[% global.text | Autoformat %]
 -- expect --
          This is some text which I would like to have formatted and I
          should ensure that it continues for a reasonable length
 
 -- test --
-[% USE autoformat(left=5) %]
-[% global.text | autoformat(right=30) %]
+[% USE Autoformat(left=5) %]
+[% global.text | Autoformat(right=30) %]
 -- expect --
     This is some text which I
     would like to have
@@ -96,8 +93,8 @@ for a reasonable length more text
     for a reasonable length
 
 -- test --
-[% USE autoformat %]
-[% FILTER autoformat(right=>30, case => 'upper') -%]
+[% USE Autoformat %]
+[% FILTER Autoformat(right=>30, case => 'upper') -%]
 This is some more text.  OK!  There's no need to shout!
 > quoted stuff goes here
 > more quoted stuff
@@ -111,15 +108,15 @@ THERE'S NO NEED TO SHOUT!
 > blah blah blah
 
 -- test --
-[% USE autoformat %]
-[% autoformat(global.text, ' of time.') %]
+[% USE Autoformat %]
+[% Autoformat(global.text, ' of time.') %]
 -- expect --
 This is some text which I would like to have formatted and I should
 ensure that it continues for a reasonable length of time.
 
 -- test --
-[% USE autoformat %]
-[% autoformat(global.text, ' of time.', right=>30) %]
+[% USE Autoformat %]
+[% Autoformat(global.text, ' of time.', right=>30) %]
 -- expect --
 This is some text which I
 would like to have formatted
@@ -128,8 +125,8 @@ continues for a reasonable
 length of time.
 
 -- test --
-[% USE autoformat %]
-[% FILTER poetry = autoformat(left => 20, right => 40) %]
+[% USE Autoformat %]
+[% FILTER poetry = Autoformat(left => 20, right => 40) %]
    Be not afeard.  The isle is full of noises, sounds and sweet 
    airs that give delight but hurt not.
 [% END %]
@@ -153,9 +150,9 @@ Item      Description          Cost
 [% form = BLOCK %]
 <<<<<<    [[[[[[[[[[[[[[[   >>>>.<<
 [% END -%]
-[% USE autoformat(form => form) %]
-[% autoformat('foo', 'The Foo Item', 123.545) %]
-[% autoformat('bar', 'The Bar Item', 456.789) %]
+[% USE Autoformat(form => form) %]
+[% Autoformat('foo', 'The Foo Item', 123.545) %]
+[% Autoformat('bar', 'The Bar Item', 456.789) %]
 -- expect --
 -- process --
 Item      Description          Cost
@@ -164,10 +161,10 @@ foo       The Foo Item       123[% decimal %]55
 bar       The Bar Item       456[% decimal %]79
 
 -- test --
-[% USE autoformat(form => '>>>.<<', numeric => 'AllPlaces') %]
-[% autoformat(n) 
+[% USE Autoformat(form => '>>>.<<', numeric => 'AllPlaces') %]
+[% Autoformat(n) 
     FOREACH n = [ 123, 34.54, 99 ] +%]
-[% autoformat(987, 654.32) %]
+[% Autoformat(987, 654.32) %]
 -- expect --
 -- process --
 123[% decimal %]00
