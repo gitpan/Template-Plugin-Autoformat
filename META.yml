@@ -25,4 +25,4 @@ resources:
   homepage: https://github.com/karpet/template-plugin-autoformat
   license: http://dev.perl.org/licenses/
   repository: https://github.com/karpet/template-plugin-autoformat
-version: 2.74_01
+version: 2.74_02
